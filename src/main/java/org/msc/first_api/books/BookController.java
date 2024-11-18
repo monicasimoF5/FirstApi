@@ -10,16 +10,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/books")
 public class BookController {
-    private final static List<Book> booksDb = new ArrayList<>();
+
+    private final BookRepository bookRepository;
 
     public BookController() {
-        booksDb.add(new Book("A123", "Título1", "Autor1"));
-        booksDb.add(new Book("A124", "Título2", "Autor2"));
-        booksDb.add(new Book("A125", "Título3", "Autor3"));
+        this.bookRepository = new InMemoryBookRepository();
     }
 
     @GetMapping
     public List<Book> getAllBooks(){
-        return booksDb;
+        return this.bookRepository.findAll();
     }
 }
