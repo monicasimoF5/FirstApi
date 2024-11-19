@@ -15,9 +15,14 @@ public class InMemoryBookRepository implements BookRepository {
     }
 
     @Override
+    public List<Book> findAll() {
+        return Collections.unmodifiableList(booksDb);
+    }
+
+    @Override
     public Optional<Book> findByIsbn(String isbn) {
 
-        for (Book book : booksDb){
+        for (Book book : booksDb) {
             if (book.getIsbn().equals(isbn)) return Optional.of(book);
         }
 
@@ -31,7 +36,11 @@ public class InMemoryBookRepository implements BookRepository {
     }
 
     @Override
-    public List<Book> findAll() {
-        return Collections.unmodifiableList(booksDb);
+    public void deleteIsbn(String isbn) {
+
+        booksDb.removeIf(book -> book.getIsbn().equals(isbn));
+
     }
+
+
 }

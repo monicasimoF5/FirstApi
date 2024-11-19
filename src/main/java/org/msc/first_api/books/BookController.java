@@ -19,7 +19,7 @@ public class BookController {
 
     @GetMapping
     public List<Book> getAllBooks(){
-        return this.bookRepository.findAll();
+        return bookRepository.findAll();
     }
 
     @GetMapping("/{isbn}")
@@ -43,6 +43,19 @@ public class BookController {
 
         bookRepository.save(book);
         return new ResponseEntity<>(book, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{isbn}")
+    public ResponseEntity<Book> deleteIsbn(@PathVariable String isbn){
+        Optional<Book> optionalBook = bookRepository.findByIsbn(isbn);
+
+        if (!optionalBook.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        bookRepository.deleteIsbn(isbn);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }
