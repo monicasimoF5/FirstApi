@@ -25,6 +25,12 @@ public class InMemoryBookRepository implements BookRepository {
     }
 
     @Override
+    public Optional<Book> save(Book book) {
+        booksDb.add(book);
+        return null;
+    }
+
+    @Override
     public List<Book> findAll() {
         return Collections.unmodifiableList(booksDb);
     }
